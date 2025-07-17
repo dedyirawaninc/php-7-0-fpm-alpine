@@ -1,4 +1,4 @@
-FROM php:7.0-fpm-alpine
+FROM php:7.1-fpm-alpine
 
 LABEL maintainer="Dedy Irawan <dedy.irawan.inc@gmail.com>"
 
@@ -6,6 +6,9 @@ RUN apk update
 RUN apk upgrade
 
 RUN apk add --update --no-cache autoconf
+RUN apk add --update --no-cache bash
+RUN apk add --update --no-cache ca-certificates
+RUN apk add --update --no-cache curl
 RUN apk add --update --no-cache g++
 RUN apk add --update --no-cache imagemagick
 RUN apk add --update --no-cache imagemagick-dev
@@ -15,6 +18,10 @@ RUN apk add --update --no-cache libtool
 RUN apk add --update --no-cache libzip-dev
 RUN apk add --update --no-cache make
 RUN apk add --update --no-cache pcre-dev
+
+RUN update-ca-certificates
+
+COPY ./php.ini /usr/local/etc/php/php.ini
 
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install gd
